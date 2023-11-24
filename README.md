@@ -1,3 +1,6 @@
+[![Crates.io](https://img.shields.io/crates/v/evaluroll.svg)](https://crates.io/crates/evaluroll)
+[![Workflow Status](https://github.com/zshift/evaluroll/workflows/main/badge.svg)](https://github.com/zshift/evaluroll/actions?query=workflow%3A%22main%22)
+
 # evaluroll
 
 Evaluroll is a dice roll evaluator for tabletop games.
