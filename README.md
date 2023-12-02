@@ -1,4 +1,5 @@
 [![Crates.io](https://img.shields.io/crates/v/evaluroll.svg)](https://crates.io/crates/evaluroll)
+[![docs.rs](https://img.shields.io/docsrs/evaluroll)](https://docs.rs/evaluroll/latest/evaluroll/)
 [![Workflow Status](https://github.com/zshift/evaluroll/workflows/main/badge.svg)](https://github.com/zshift/evaluroll/actions?query=workflow%3A%22main%22)
 
 # evaluroll
