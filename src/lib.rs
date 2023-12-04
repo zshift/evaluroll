@@ -315,7 +315,7 @@ mod tests {
     use rand_hc::Hc128Rng;
     use rayon::prelude::*;
 
-    static RNG: Lazy<Hc128Rng> = Lazy::new(|| Hc128Rng::from_entropy());
+    static RNG: Lazy<Hc128Rng> = Lazy::new(Hc128Rng::from_entropy);
 
     #[test]
     fn roll_cmp() {

@@ -5,12 +5,18 @@ use rand::Rng;
 use crate::{Error, Eval, Result};
 
 /// The result of a roll, and whether or not it is kept.
-#[derive(Debug, Clone, PartialEq, PartialOrd, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Roll {
     /// The result of the roll.
     pub result: u32,
     /// Whether or not the roll is kept.
     pub keep: bool,
+}
+
+impl PartialOrd for Roll {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 impl Ord for Roll {
@@ -52,7 +58,7 @@ impl Output {
         T: FnOnce(i32, i32) -> i32,
     {
         Output {
-            rolls: vec![left.rolls, right.rolls].concat(),
+            rolls: [left.rolls, right.rolls].concat(),
             total: op(left.total, right.total),
         }
     }
@@ -460,10 +466,10 @@ impl Eval for DiceRoll {
             Vec::new()
         };
 
-        let total = Self::total(&rolls) as i32;
+        let total = Self::total(&rolls);
 
         Ok(Output {
-            rolls: vec![
+            rolls: [
                 count_roll.rolls,
                 sides_roll.rolls,
                 keep_rolls,
