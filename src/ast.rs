@@ -385,7 +385,7 @@ impl DiceRoll {
     fn roll_dice<R: Rng + ?Sized>(&self, rng: &mut R, count: u32, sides: u32) -> Vec<Roll> {
         (0..count)
             .map(move |_| Roll {
-                result: rng.gen_range(1..=sides),
+                result: rng.random_range(1..=sides),
                 keep: true,
             })
             .collect()

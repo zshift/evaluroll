@@ -311,11 +311,11 @@ mod tests {
     use crate::{ast::*, parser, Eval};
 
     use once_cell::sync::Lazy;
-    use rand::SeedableRng;
+    use rand_core::SeedableRng;
     use rand_hc::Hc128Rng;
     use rayon::prelude::*;
 
-    static RNG: Lazy<Hc128Rng> = Lazy::new(Hc128Rng::from_entropy);
+    static RNG: Lazy<Hc128Rng> = Lazy::new(Hc128Rng::from_os_rng);
 
     #[test]
     fn roll_cmp() {
