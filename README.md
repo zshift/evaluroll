@@ -25,11 +25,12 @@ let ast = evaluroll::parse("1d20")?;
 Evaluating an AST:
 
 ```rust
+use rand::rngs::SmallRng;
 use evaluroll::Eval;
 
 let ast = evaluroll::parse("1d20")?;
 
-let mut rng = rand::thread_rng();
+let mut rng: SmallRng = rand::make_rng();
 let output = ast.eval(&mut rng)?;
 
 assert_eq!(1, output.rolls.len());
@@ -39,7 +40,7 @@ assert!((1..=20).contains(&output.total));
 Evaluating an expression directly:
 
 ```rust
-let mut rng = rand::thread_rng();
+let mut rng: SmallRng = rand::make_rng();
 let output = evaluroll::eval(&mut rng, "1d20")?;
 
 assert_eq!(1, output.rolls.len());
