@@ -19,12 +19,13 @@
 //! Evaluating an AST:
 //!
 //! ```
+//! use rand::rngs::SmallRng;
 //! use evaluroll::Eval;
 //!
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
 //! let ast = evaluroll::parse("1d20")?;
 //!
-//! let mut rng = rand::thread_rng();
+//! let mut rng: SmallRng = rand::make_rng();
 //! let output = ast.eval(&mut rng)?;
 //!
 //! assert_eq!(1, output.rolls.len());
@@ -36,8 +37,9 @@
 //! Evaluating an expression directly:
 //!
 //! ```
+//! use rand::rngs::SmallRng;
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
-//! let mut rng = rand::thread_rng();
+//! let mut rng: SmallRng = rand::make_rng();
 //! let output = evaluroll::eval(&mut rng, "1d20")?;
 //!
 //! assert_eq!(1, output.rolls.len());
@@ -93,10 +95,11 @@ pub trait Eval {
 ///
 /// **Basic roll**
 /// ```
+/// use rand::rngs::SmallRng;
 /// use evaluroll::ast::Output;
 ///
 /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
-/// let mut rng = rand::thread_rng();
+/// let mut rng: SmallRng = rand::make_rng();
 /// let results: Output = evaluroll::eval(&mut rng, "1d20")?;
 ///
 /// assert_eq!(results.rolls.len(), 1);
@@ -107,10 +110,11 @@ pub trait Eval {
 ///
 /// **Arithmetic on roll results**
 /// ```
+/// use rand::rngs::SmallRng;
 /// use evaluroll::ast::Output;
 ///
 /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
-/// let mut rng = rand::thread_rng();
+/// let mut rng: SmallRng = rand::make_rng();
 /// let results: Output = evaluroll::eval(&mut rng, "3d4 * 5")?;
 ///
 /// assert_eq!(results.rolls.len(), 3);
@@ -121,9 +125,10 @@ pub trait Eval {
 ///
 /// **Keep highest**
 /// ```
+/// use rand::rngs::SmallRng;
 /// # use evaluroll::ast::Output;
 /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
-/// let mut rng = rand::thread_rng();
+/// let mut rng: SmallRng = rand::make_rng();
 /// let results: Output = evaluroll::eval(&mut rng, "3d4k2")?;
 ///
 /// assert_eq!(results.rolls.len(), 3);
@@ -297,7 +302,7 @@ impl Display for Error {
             Error::ParseError(cause) => cause.as_str(),
         };
 
-        write!(f, "Roll failed. Cause: {:#?}", cause)
+        write!(f, "Roll failed. Cause: {cause:#?}")
     }
 }
 
@@ -311,11 +316,10 @@ mod tests {
     use crate::{ast::*, parser, Eval};
 
     use once_cell::sync::Lazy;
-    use rand_core::SeedableRng;
     use rand_hc::Hc128Rng;
     use rayon::prelude::*;
 
-    static RNG: Lazy<Hc128Rng> = Lazy::new(Hc128Rng::from_os_rng);
+    static RNG: Lazy<Hc128Rng> = Lazy::new(rand::make_rng);
 
     #[test]
     fn roll_cmp() {

@@ -1,6 +1,6 @@
 //! The abstract syntax tree for the dice expression language.
 
-use rand::Rng;
+use rand::{Rng, RngExt};
 
 use crate::{Error, Eval, Result};
 
